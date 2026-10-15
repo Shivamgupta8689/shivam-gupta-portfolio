@@ -271,3 +271,7 @@ body.custom-cursor-active textarea {
   .reveal { opacity: 1 !important; }
   .reveal.is-visible { animation: none !important; }
 }
+
+/* While the intro plays: no scrolling, and hold the hero name animation */
+html.is-loading { overflow: hidden; }
+html.is-loading [class*="letter"] { animation-play-state: paused; }

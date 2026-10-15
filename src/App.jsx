@@ -1,4 +1,6 @@
 import { useTheme } from './hooks/useTheme';
+import { useState, useCallback } from 'react';
+import Loader from './components/Loader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -9,12 +11,27 @@ import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import { Toaster } from 'react-hot-toast';
 
+
 export default function App() {
   const { theme } = useTheme();
+  const [showLoader, setShowLoader] = useState(() => {
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+      return !sessionStorage.getItem('intro_seen');
+    } catch {
+      return true;
+    }
+  });
+
+  const handleLoaderDone = useCallback(() => {
+    try { sessionStorage.setItem('intro_seen', '1'); } catch { /* ignore */ }
+    setShowLoader(false);
+  }, []);
 
   return (
     <>
-    <Toaster
+      {showLoader && <Loader onDone={handleLoaderDone} />}
+      <Toaster
         position="bottom-right"
         toastOptions={{
           duration: 4000,
