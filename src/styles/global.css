@@ -1,0 +1,273 @@
+/* =====================================================
+   Global CSS — Portfolio Site
+   ===================================================== */
+
+:root {
+  --display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Newsreader', Georgia, 'Times New Roman', serif;
+
+  /* Light theme default */
+  --bg: #E9EEF2;
+  --bg-rgb: 233, 238, 242;
+  --ink: #101820;
+  --muted: #4B5A68;
+  --line: #B8C4CF;
+  --accent: #2446E8;
+  --accent-soft: rgba(36, 70, 232, 0.12);
+  --spotlight-opacity: 0.14;
+
+  /* ── Page edges: ONE place that controls all side spacing ── */
+  --gutter: clamp(1rem, 3.5vw, 3.5rem);   /* minimum side gap: 16px phone → 56px big screen */
+  --maxw: 120rem;                         /* content stops growing after 1920px */
+  --edge: max(var(--gutter), calc((100% - var(--maxw)) / 2 + var(--gutter)));
+}
+
+[data-theme="dark"] {
+  --bg: #0F151B;
+  --bg-rgb: 15, 21, 27;
+  --ink: #E8EEF3;
+  --muted: #9AABBA;
+  --line: #2B3946;
+  --accent: #7C95FF;
+  --accent-soft: rgba(124, 149, 255, 0.16);
+  --spotlight-opacity: 0.12;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] {
+    --bg: #0F151B;
+    --bg-rgb: 15, 21, 27;
+    --ink: #E8EEF3;
+    --muted: #9AABBA;
+    --line: #2B3946;
+    --accent: #7C95FF;
+    --accent-soft: rgba(124, 149, 255, 0.16);
+    --spotlight-opacity: 0.12;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-size: 16px;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--body);
+  background-color: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: clip;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* ── Container (used by the navbar) ─────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: var(--edge);
+  position: relative;
+}
+
+/* Sections and footer already get the same side space below,
+   so a .container inside them must NOT add padding again. */
+main > section .container,
+footer .container {
+  padding-inline: 0;
+  max-width: none;
+  margin-inline: 0;
+}
+
+/* ── Typography ─────────────────────────────────────────────────────── */
+h1, h2, h3, h4, .font-display {
+  font-family: var(--display);
+  letter-spacing: -0.025em;
+}
+
+p {
+  font-family: var(--body);
+  font-size: 1.25rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+a, p, h1, h2, h3 { overflow-wrap: anywhere; }
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Keep long paragraphs readable on wide screens */
+.about-bio,
+.hero-intro,
+.contact-heading { max-width: 46rem; }
+
+/* ── Sections: same side space as the navbar, same vertical rhythm ──── */
+section {
+  position: relative;
+  border-bottom: none;
+}
+
+main > section:not(#home) {
+  padding-inline: var(--edge);
+  padding-block: clamp(3.5rem, 8vw, 6rem);
+}
+
+/* Hero stays full width (3D canvas), its text keeps side padding */
+#home {
+  padding-inline: var(--gutter);
+}
+
+footer {
+  padding-inline: var(--edge);
+}
+
+/* Accent → transparent divider */
+section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--accent) 35%,
+    var(--accent) 65%,
+    transparent 100%
+  );
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Grid and flex children must be allowed to shrink (no sideways scroll) */
+main > section :is(div, ul, li) { min-width: 0; }
+
+/* ── Section eyebrow ────────────────────────────────────────────────── */
+.section-eyebrow {
+  font-family: var(--display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 2rem;
+}
+
+/* ── Soft glow behind section heading (no hard edges) ───────────────── */
+.section-glow {
+  position: relative;
+}
+
+.section-glow::before {
+  content: '';
+  position: absolute;
+  top: -6rem;
+  left: -6rem;
+  width: 36rem;
+  height: 22rem;
+  background: radial-gradient(ellipse at center, var(--accent) 0%, transparent 70%);
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Section reveal animation ───────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal { opacity: 0; }
+.reveal.is-visible { animation: fadeUp 0.5s ease forwards; }
+
+/* ── Buttons ────────────────────────────────────────────────────────── */
+.btn {
+  font-family: var(--display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 0.8rem 1.85rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: #ffffff;
+  border: 1.5px solid var(--accent);
+}
+
+.btn-primary:hover {
+  opacity: 0.92;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+}
+
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* ── Custom cursor ──────────────────────────────────────────────────── */
+body.custom-cursor-active a,
+body.custom-cursor-active button,
+body.custom-cursor-active summary {
+  cursor: none;
+}
+
+body.custom-cursor-active input[type="text"],
+body.custom-cursor-active input[type="email"],
+body.custom-cursor-active textarea {
+  cursor: text !important;
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+  .hero-letter { opacity: 1 !important; transform: none !important; }
+  .reveal { opacity: 1 !important; }
+  .reveal.is-visible { animation: none !important; }
+}

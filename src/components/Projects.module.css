@@ -1,0 +1,9 @@
+.section {
+  padding: 4.5rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.projectsIndex {
+  display: flex;
+  flex-direction: column;
+}

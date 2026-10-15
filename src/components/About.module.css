@@ -1,0 +1,69 @@
+.section {
+  padding: 4.5rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.bio {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--ink);
+  max-width: 46rem;
+  margin-bottom: 3rem;
+}
+
+.timelineTable {
+  width: 100%;
+  border-top: 1px solid var(--line);
+}
+
+.timelineRow {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  padding: 1.85rem 0;
+  border-bottom: 1px solid var(--line);
+  gap: 2rem;
+  align-items: baseline;
+}
+
+.timelineDate {
+  font-family: var(--display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.timelineDetail {}
+
+.timelineTitle {
+  font-family: var(--display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.015em;
+}
+
+.roleCompany {
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.timelineDetail p {
+  font-size: 1.15rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+@media (max-width: 640px) {
+  .timelineRow {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .timelineDate {
+    margin-bottom: 0.25rem;
+  }
+}

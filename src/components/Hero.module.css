@@ -1,0 +1,179 @@
+/* ── Hero section ────────────────────────────────────────────────────── */
+.heroSection {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: calc(100vh - 65px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 5rem 1.5rem 5rem;
+  /* Thin accent-to-transparent bottom divider instead of grey line */
+  border-bottom: none;
+}
+
+/* Accent-to-transparent divider at bottom of hero */
+.heroSection::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 40%, var(--accent) 60%, transparent 100%);
+  opacity: 0.45;
+}
+
+/* ── Local text-backdrop vignette (behind name + intro only) ─────────── */
+.vignette {
+  position: absolute;
+  /* Slightly shorter than full viewport so shapes are vivid at edges */
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  /* Soft radial centered, ~55% bg at center → fully transparent by ~45% width */
+  background: radial-gradient(60% 55% at 50% 50%,
+      rgba(var(--bg-rgb), 0.55) 0%,
+      rgba(var(--bg-rgb), 0.22) 45%,
+      transparent 70%);
+  transition: background 0.3s ease;
+}
+
+/* ── Spotlight ── soft accent radial, low opacity, correct blend mode ── */
+.spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  /* Soft accent radial gradient */
+  background: radial-gradient(500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      var(--accent),
+      transparent 65%);
+  /* Cap brightness — use filter to limit to ~14% */
+  filter: opacity(0.14);
+  mix-blend-mode: multiply;
+  /* light mode */
+}
+
+/* Dark-mode: screen blend */
+[data-theme="dark"] .spotlight {
+  mix-blend-mode: screen;
+  filter: opacity(0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] .spotlight {
+    mix-blend-mode: screen;
+    filter: opacity(0.12);
+  }
+}
+
+/* ── Hero content ───────────────────────────────────────────────────── */
+.heroContent {
+  position: relative;
+  z-index: 10;
+  max-width: 58rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+/* ── Title ───────────────────────────────────────────────────────────── */
+.heroTitle {
+  font-size: clamp(3.2rem, 11.5vw, 8.5rem);
+  line-height: 0.98;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  user-select: none;
+  /* Subtle text shadow using page bg — improves legibility over bright shapes */
+  text-shadow:
+    0 2px 18px rgba(var(--bg-rgb), 0.6),
+    0 0 8px rgba(var(--bg-rgb), 0.4);
+}
+
+.heroTitleLine {
+  display: block;
+  white-space: nowrap;
+}
+
+.heroTitleAccent {
+  color: var(--accent);
+}
+
+/*
+ * Letter entrance: animation-fill-mode backwards so the letter starts hidden
+ * and JS transform works freely after the animation ends (no forwards override).
+ */
+.heroLetter {
+  display: inline-block;
+  will-change: transform, opacity;
+  transform-origin: center center;
+  animation: letterEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: calc(var(--letter-idx, 0) * 42ms);
+}
+
+@keyframes letterEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Intro paragraph ─────────────────────────────────────────────────── */
+.heroIntro {
+  font-family: var(--body);
+  font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+  color: var(--muted);
+  line-height: 1.55;
+  max-width: 34rem;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+  will-change: transform;
+  text-shadow: 0 1px 12px rgba(var(--bg-rgb), 0.5);
+}
+
+/* ── CTA buttons ─────────────────────────────────────────────────────── */
+.heroActions {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .heroSection {
+    min-height: calc(100vh - 60px);
+    padding: 4rem 1rem 3.5rem;
+  }
+
+  .heroTitle {
+    font-size: clamp(2.8rem, 15vw, 4.2rem);
+  }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .heroLetter {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

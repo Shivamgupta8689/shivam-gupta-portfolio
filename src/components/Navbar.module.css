@@ -1,0 +1,113 @@
+.siteHeader {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding-top: max(1.2rem, env(safe-area-inset-top));
+  padding-bottom: 1.2rem;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.navInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  display: inline-block;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1.75rem;
+  list-style: none;
+  align-items: center;
+}
+
+.navItem {}
+
+.navLink {
+  font-family: var(--display);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--muted);
+  display: inline-block;
+  padding: 0.25rem 0;
+  position: relative;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.navLink:hover {
+  color: var(--accent);
+}
+
+.activeLink {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.mobileMenuBtn {
+  display: none;
+  font-family: var(--display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 0.4rem 0.85rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.mobileNavOverlay {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding: 1.25rem 1.5rem 1.75rem;
+  box-shadow: 0 16px 30px rgba(0,0,0,0.08);
+}
+
+.mobileNavOverlay.isOpen {
+  display: block;
+}
+
+.mobileNavLinks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.mobileNavLink {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink);
+  display: block;
+  padding: 0.25rem 0;
+}
+
+.mobileNavLink[aria-current="true"] {
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .navLinks {
+    display: none;
+  }
+  .mobileMenuBtn {
+    display: inline-block;
+  }
+}

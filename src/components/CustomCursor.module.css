@@ -1,0 +1,63 @@
+.dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent);
+  margin: -4px 0 0 -4px;
+  display: none;
+  will-change: transform, opacity;
+  transition: opacity 0.15s ease;
+}
+
+.ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--accent);
+  margin: -18px 0 0 -18px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  will-change: transform, width, height;
+  transition:
+    width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    margin 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.hoverLink {
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+  background-color: var(--accent-soft);
+}
+
+.hoverProject {
+  width: 68px;
+  height: 68px;
+  margin: -34px 0 0 -34px;
+  background-color: var(--accent-soft);
+  border-width: 2px;
+}
+
+.activeClick {
+  transform: scale(0.85);
+}
